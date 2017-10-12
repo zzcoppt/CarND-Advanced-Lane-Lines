@@ -22,7 +22,7 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/undistorted_example.png "Undistorted"
 [image2]: ./output_images/undistortion.png "Undistorted"
 [image3]: ./output_images/x_thred.png "x_thredx_thred"
-[image4]: ./output_imges/mag_thresh.png "mag_thresh"
+[image4]: ./output_images/mag_thresh.png 
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
