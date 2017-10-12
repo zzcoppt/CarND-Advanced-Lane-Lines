@@ -25,13 +25,14 @@ thresh = []
 binary_wrapeds = []
 histogram = []
 for img in undistorted:
-    x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=35, thresh_max=100)
-    mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(50, 100))
+    x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=55, thresh_max=100)
+    mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(70, 255))
     dir_thresh = utils.dir_threshold(img, sobel_kernel=21, thresh=(0.7, 1.3))
     s_thresh = utils.hls_select(img,channel='s',thresh=(180, 255))
   
-    combined = np.zeros_like(x_thresh)
+    combined = np.zeros_like(mag_thresh)
     combined[(x_thresh==1) | ((mag_thresh == 1) & (dir_thresh == 1)) | (s_thresh==1)] = 1
+    combined[((mag_thresh == 1) & (dir_thresh == 1))] = 1
     
     src = np.float32([[(203, 720), (585, 460), (695, 460), (1127, 720)]])
     dst = np.float32([[(320, 720), (320, 0), (960, 0), (960, 720)]])
@@ -43,7 +44,7 @@ for img in undistorted:
     
     binary_wrapeds.append(binary_warped)
     
-    thresh.append(s_thresh)
+    thresh.append(combined)
     
 
 plt.figure(figsize=(20,68))
@@ -152,23 +153,23 @@ for binary_warped in binary_wrapeds:
 #    plt.title('after x_thred')
 #    plt.imshow(thresh[i],cmap ='gray')
 #    
-#plt.figure(figsize=(20,68))
-#for i in range(len(thresh)):
-#    
-#    plt.subplot(2*len(thresh),2,2*i+1)
-#    plt.title('thresholded_wraped image')
-#    plt.imshow(thresh[i],cmap ='gray')
-#    
-#    plt.subplot(2*len(thresh),2,2*i+2)
-#    plt.title('histogram')
-#    plt.plot(histogram[i])
+plt.figure(figsize=(20,68))
+for i in range(len(thresh)):
     
-undist = utils.cal_undistort(cal_imgs[0],object_points,img_points)
-plt.figure(figsize=(20,10))
-plt.subplot(2,2,1)
-plt.title('before undistorted')
-plt.imshow(cal_imgs[0][:,:,::-1])
-
-plt.subplot(2,2,2)
-plt.title('after undistorted')
-plt.imshow(undist[:,:,::-1])
+    plt.subplot(2*len(thresh),2,2*i+1)
+    plt.title('thresholded_wraped image')
+    plt.imshow(thresh[i],cmap ='gray')
+    
+    plt.subplot(2*len(thresh),2,2*i+2)
+    plt.title('histogram')
+    plt.plot(histogram[i])
+    
+#undist = utils.cal_undistort(cal_imgs[0],object_points,img_points)
+#plt.figure(figsize=(20,10))
+#plt.subplot(2,2,1)
+#plt.title('before undistorted')
+#plt.imshow(cal_imgs[0][:,:,::-1])
+#
+#plt.subplot(2,2,2)
+#plt.title('after undistorted')
+#plt.imshow(undist[:,:,::-1])

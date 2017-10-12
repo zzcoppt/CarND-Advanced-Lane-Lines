@@ -12,7 +12,7 @@ class Line():
         # was the line detected in the last iteration?
         self.detected = False  
         # x values of the last n fits of the line
-        self.recent_xfitted = [] 
+        self.recent_fitted = [np.array([False])]
         #average x values of the fitted line over the last n iterations
         self.bestx = None     
         #polynomial coefficients averaged over the last n iterations
@@ -29,6 +29,34 @@ class Line():
         self.allx = None  
         #y values for detected line pixels
         self.ally = None
+    
+    def check_detected(self):
+        if (self.diffs[0] < 0.01 and self.diffs[1] < 10.0 and self.diffs[2] < 1000.) and len(self.recent_fitted) > 0:
+            return True
+        else:
+            return False
+    
         
-    def update():
+    def update(self,fit):
+        if fit is not None:
+            if self.best_fit is not None:
+                self.diffs = abs(fit - self.best_fit)
+                if self.check_detected():
+                    self.detected =True
+                    if len(self.recent_fitted)>10:
+                        self.recent_fitted = self.recent_fitted[1:]
+                        self.recent_fitted.append(fit)
+                    else:
+                        self.recent_fitted.append(fit)
+                    self.best_fit = np.average(self.recent_fitted, axis=0)
+                    self.current_fit = fit
+                else:
+                    self.detected = False
+            else:
+                self.best_fit = fit
+                self.current_fit = fit
+                self.detected=True
+                self.recent_fitted.append(fit)
+            
+        
         
