@@ -111,7 +111,7 @@ x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=35, thresh_max=100
 And I get a result look like this:
 ![alt text][image3]
 
-It seems that it lose track of the lane line when the road color and the line color are lighter.(You could see it in 3th,6th,7th image)
+It seems that it lose track of the lane line when the road color and the line color are lighter.(You could see it in 3rd,6th,7th image)
 
 Then I use the magnitude threshholds to see how well it does to capture the lane line:
 ```
@@ -139,6 +139,9 @@ mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(50, 100))
 ```
 Here is the result I got:
 ![alt text][image4]
+
+Still not capable of capture the lane line where both the road and lane color are light.()
+
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
 
