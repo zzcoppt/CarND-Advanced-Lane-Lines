@@ -19,10 +19,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/undistort_output.png "Undistorted"
-[image2]: ./test_images/test1.jpg "Road Transformed"
-[image3]: ./examples/binary_combo_example.jpg "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
+[image1]: ./output_images/undistorted_example.png "Undistorted"
+[image2]: ./output_images/undistortion.png "Undistorted"
+[image3]: ./output_images/x_thred.png "x_thredx_thred"
+[image4]: ./output_images/mag_thresh.png 
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
@@ -43,11 +43,24 @@ You're reading it!
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the first code cell of the IPython notebook located in "./examples/example.ipynb" (or in lines # through # of the file called `some_file.py`).  
-
+The code for this step is contained in 22 line of file called "utils.py" .  
+```
+def calibrate(images,grid=(9,6)):
+    object_points=[]
+    img_points = []
+    for img in images:
+        object_point = np.zeros( (grid[0]*grid[1],3),np.float32 )
+        object_point[:,:2]= np.mgrid[0:grid[0],0:grid[1]].T.reshape(-1,2)
+        gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        ret, corners = cv2.findChessboardCorners(gray, grid, None)
+        if ret:
+            object_points.append(object_point)
+            img_points.append(corners)
+    return object_points,object_pointsv
+```
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
-I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+I then used the output `object_points` and `object_points` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
 ![alt text][image1]
 
@@ -55,14 +68,83 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 #### 1. Provide an example of a distortion-corrected image.
 
-To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
+Here is the code that I apply the undistortion methon to the test images:
+```
+cal_imgs = utils.get_images_by_dir('camera_cal')
+object_points,img_points = utils.calibrate(cal_imgs,grid=(9,6))
+
+test_imgs = utils.get_images_by_dir('test_images')
+
+undistorted = []
+for img in test_imgs:
+    img = utils.cal_undistort(img,object_points,img_points)
+    undistorted.append(img)
+```
+This is how the result look like:
 ![alt text][image2]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+First I use the x abs_sobel_thresh to generate generate a binary image:
+```
+def abs_sobel_thresh(img, orient='x', thresh_min=0, thresh_max=255):
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    # Apply x or y gradient with the OpenCV Sobel() function
+    # and take the absolute value
+    if orient == 'x':
+        abs_sobel = np.absolute(cv2.Sobel(gray, cv2.CV_64F, 1, 0))
+    if orient == 'y':
+        abs_sobel = np.absolute(cv2.Sobel(gray, cv2.CV_64F, 0, 1))
+    # Rescale back to 8 bit integer
+    scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
+    # Create a copy and apply the threshold
+    binary_output = np.zeros_like(scaled_sobel)
+    # Here I'm using inclusive (>=, <=) thresholds, but exclusive is ok too
+    binary_output[(scaled_sobel >= thresh_min) & (scaled_sobel <= thresh_max)] = 1
+
+    # Return the result
+    return binary_output
+```
+```
+x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=35, thresh_max=100)
+```
+And I get a result look like this:
+![alt text][image3]
+
+It seems that it lose track of the lane line when the road color and the line color are lighter.(You could see it in 3rd,6th,7th image)
+
+Then I use the magnitude threshholds to see how well it does to capture the lane line:
+```
+def mag_thresh(img, sobel_kernel=3, mag_thresh=(0, 255)):
+    # Convert to grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    # Take both Sobel x and y gradients
+    sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
+    sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
+    # Calculate the gradient magnitude
+    gradmag = np.sqrt(sobelx**2 + sobely**2)
+    # Rescale to 8 bit
+    scale_factor = np.max(gradmag)/255 
+    gradmag = (gradmag/scale_factor).astype(np.uint8) 
+    # Create a binary image of ones where threshold is met, zeros otherwise
+    binary_output = np.zeros_like(gradmag)
+    binary_output[(gradmag >= mag_thresh[0]) & (gradmag <= mag_thresh[1])] = 1
+
+    # Return the binary image
+    return binary_output
+
+```
+```
+mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(50, 100))
+```
+Here is the result I got:
+![alt text][image4]
+
+Still not capable of capture the lane line where both the road and lane color are light.()
 
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
-![alt text][image3]
+
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
