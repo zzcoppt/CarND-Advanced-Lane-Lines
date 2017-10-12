@@ -141,16 +141,16 @@ for binary_warped in binary_wrapeds:
 
     
    
-plt.figure(figsize=(20,68))
-for i in range(len(thresh)):
-    
-    plt.subplot(2*len(thresh),2,2*i+1)
-    plt.title('before x_thred')
-    plt.imshow(test_imgs[i][:,:,::-1])
-    
-    plt.subplot(2*len(thresh),2,2*i+2)
-    plt.title('after x_thred')
-    plt.imshow(thresh[i],cmap ='gray')
+#plt.figure(figsize=(20,68))
+#for i in range(len(thresh)):
+#    
+#    plt.subplot(2*len(thresh),2,2*i+1)
+#    plt.title('before x_thred')
+#    plt.imshow(test_imgs[i][:,:,::-1])
+#    
+#    plt.subplot(2*len(thresh),2,2*i+2)
+#    plt.title('after x_thred')
+#    plt.imshow(thresh[i],cmap ='gray')
 #    
 #plt.figure(figsize=(20,68))
 #for i in range(len(thresh)):
@@ -163,4 +163,12 @@ for i in range(len(thresh)):
 #    plt.title('histogram')
 #    plt.plot(histogram[i])
     
+undist = utils.cal_undistort(cal_imgs[0],object_points,img_points)
+plt.figure(figsize=(20,10))
+plt.subplot(2,2,1)
+plt.title('before undistorted')
+plt.imshow(cal_imgs[0][:,:,::-1])
 
+plt.subplot(2,2,2)
+plt.title('after undistorted')
+plt.imshow(undist[:,:,::-1])
