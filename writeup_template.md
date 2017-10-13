@@ -23,7 +23,7 @@ The goals / steps of this project are the following:
 [image2]: ./output_images/undistortion.png "Undistorted"
 [image3]: ./output_images/x_thred.png "x_thredx_thred"
 [image4]: ./output_images/mag_thresh.png 
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
+[image5]: ./output_images/dir_thresh.png
 [image6]: ./examples/example_output.jpg "Output"
 [video1]: ./project_video.mp4 "Video"
 
@@ -140,7 +140,28 @@ mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(50, 100))
 Here is the result I got:
 ![alt text][image4]
 
-Still not capable of capture the lane line where both the road and lane color are light.()
+Still not capable of capture the lane line where both the road and lane color are light.(See 3rd,6th,7th image)
+
+So I turn to direction threshholds:
+```
+def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi/2)):
+    # Grayscale
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    # Calculate the x and y gradients
+    sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
+    sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
+    # Take the absolute value of the gradient direction, 
+    # apply a threshold, and create a binary image result
+    absgraddir = np.arctan2(np.absolute(sobely), np.absolute(sobelx))
+    binary_output =  np.zeros_like(absgraddir)
+    binary_output[(absgraddir >= thresh[0]) & (absgraddir <= thresh[1])] = 1
+
+    # Return the binary image
+    return binary_output
+```
+```
+dir_thresh = utils.dir_threshold(img, sobel_kernel=21, thresh=(0.7, 1.3))
+```
 
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
@@ -162,6 +183,8 @@ dst = np.float32(
     [(img_size[0] * 3 / 4), img_size[1]],
     [(img_size[0] * 3 / 4), 0]])
 ```
+Here is the result I got:
+![alt text][image4]
 
 This resulted in the following source and destination points:
 
