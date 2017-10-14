@@ -24,7 +24,9 @@ The goals / steps of this project are the following:
 [image3]: ./output_images/x_thred.png "x_thredx_thred"
 [image4]: ./output_images/mag_thresh.png 
 [image5]: ./output_images/dir_thresh.png
-[image6]: ./examples/example_output.jpg "Output"
+[image6]: ./output_images/s_thresh.png
+[image7]: ./output_images/combined_all.png
+
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -111,7 +113,7 @@ x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=35, thresh_max=100
 And I get a result look like this:
 ![alt text][image3]
 
-It seems that it lose track of the lane line when the road color and the line color are lighter.(You could see it in 3rd,6th,7th image)
+It seems that it lose track of the lane line where the road color and the line color are light.(You could see it in 3rd,6th,7th image)
 
 Then I use the magnitude threshholds to see how well it does to capture the lane line:
 ```
@@ -162,10 +164,38 @@ def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi/2)):
 ```
 dir_thresh = utils.dir_threshold(img, sobel_kernel=21, thresh=(0.7, 1.3))
 ```
+Here is the result I got:
+![alt text][image5]
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+It seems a bit too much blur.
 
+Seems gradient thresholds are not capable to handle this situation
 
+How about color thresholds:
+```
+def hls_select(img,channel='s',thresh=(0, 255)):
+    hls = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
+    if channel=='h':
+        channel = hls[:,:,0]
+    elif channel=='l':
+        channel=hls[:,:,1]
+    else:
+        channel=hls[:,:,2]
+    binary_output = np.zeros_like(channel)
+    binary_output[(channel > thresh[0]) & (channel <= thresh[1])] = 1
+    return binary_output
+```
+```
+s_thresh = utils.hls_select(img,channel='s',thresh=(180, 255))
+```
+And here is the result I got:
+![alt text][image6]
+
+The s color channel did a great job on capature the lane where both lane and road color are light.
+But still it lose track of the lane on some place.
+It seems difference thresholds capature lane line under difference situation.
+So I used a combination of color and gradient thresholds to generate a binary image at the end. And after try a few difference pramemter and combination, I finaly got the result like this:
+![alt text][image6]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -183,8 +213,7 @@ dst = np.float32(
     [(img_size[0] * 3 / 4), img_size[1]],
     [(img_size[0] * 3 / 4), 0]])
 ```
-Here is the result I got:
-![alt text][image4]
+
 
 This resulted in the following source and destination points:
 
