@@ -36,7 +36,10 @@ def processing(img,object_points,img_points,M,Minv,left_line,right_line):
     left_line.update(left_fit)
     right_line.update(right_fit)
     
-    result = utils.draw_area(undist,thresholded_wraped,Minv,left_fit, right_fit)
+    area_img = utils.draw_area(undist,thresholded_wraped,Minv,left_fit, right_fit)
+    
+    curvature,pos_from_center = utils.calculate_curv_and_pos(thresholded_wraped,left_fit, right_fit)
+    result = utils.draw_values(area_img,curvature,pos_from_center)
     return result
 
 left_line = line.Line()
@@ -47,14 +50,32 @@ M,Minv = utils.get_M_Minv()
 
 project_outpath = 'vedio_out/project_video_out.mp4'
 project_video_clip = VideoFileClip("project_video.mp4")
-project_video_out_clip = project_video_clip.fl_image(lambda clip:processing(clip,object_points,img_points,M,Minv,left_line,right_line))
+project_video_out_clip = project_video_clip.fl_image(lambda clip: processing(clip,object_points,img_points,M,Minv,left_line,right_line))
 project_video_out_clip.write_videofile(project_outpath, audio=False)
-#
 
-#project_outpath = 'vedio_out/test.mp4'
-#project_video_clip = VideoFileClip("project_video.mp4").subclip(0,5)
-#project_video_out_clip = project_video_clip.fl_image(lambda clip:processing(clip,object_points,img_points,M,Minv))
-#project_video_out_clip.write_videofile(project_outpath, audio=False)
+
+# project_outpath = 'vedio_out/test.mp4'
+# project_video_clip = VideoFileClip("challenge_video.mp4").subclip(0,5)
+# project_video_out_clip = project_video_clip.fl_image(lambda clip:processing(clip,object_points,img_points,M,Minv,left_line,right_line))
+# project_video_out_clip.write_videofile(project_outpath, audio=False)
+
+
+#test_imgs = utils.get_images_by_dir('test_images')
+#undistorted = []
+#for img in test_imgs:
+#    img = utils.cal_undistort(img,object_points,img_points)
+#    undistorted.append(img)
+# 
+#result=[]
+#for img in undistorted:
+#    res = processing(img,object_points,img_points,M,Minv,left_line,right_line)
+#    result.append(res)
 #
-#
+#plt.figure(figsize=(20,68))
+#for i in range(len(result)):
 #    
+#    plt.subplot(len(result),1,i+1)
+#    plt.title('thresholded_wraped image')
+#    plt.imshow(result[i][:,:,::-1])
+    
+    
