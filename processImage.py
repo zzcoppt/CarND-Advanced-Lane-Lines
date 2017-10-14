@@ -20,7 +20,15 @@ undistorted = []
 for img in test_imgs:
     img = utils.cal_undistort(img,object_points,img_points)
     undistorted.append(img)
- 
+
+trans_on_test=[]
+for img in undistorted:
+    src = np.float32([[(203, 720), (585, 460), (695, 460), (1127, 720)]])
+    dst = np.float32([[(320, 720), (320, 0), (960, 0), (960, 720)]])
+    M = cv2.getPerspectiveTransform(src, dst)
+    trans = cv2.warpPerspective(img, M, img.shape[1::-1], flags=cv2.INTER_LINEAR)
+    trans_on_test.append(trans)
+    
 thresh = []
 binary_wrapeds = []
 histogram = []
@@ -146,12 +154,12 @@ plt.figure(figsize=(20,68))
 for i in range(len(thresh)):
     
     plt.subplot(2*len(thresh),2,2*i+1)
-    plt.title('before thresholds')
-    plt.imshow(test_imgs[i][:,:,::-1])
+#    plt.title('before thresholds')
+    plt.imshow(undistorted[i][:,:,::-1])
     
     plt.subplot(2*len(thresh),2,2*i+2)
-    plt.title('after thresholds')
-    plt.imshow(thresh[i],cmap ='gray')
+#    plt.title('after thresholds')
+    plt.imshow(trans_on_test[i][:,:,::-1])
 #    
 #plt.figure(figsize=(20,68))
 #for i in range(len(thresh)):
