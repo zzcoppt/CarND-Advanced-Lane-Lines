@@ -28,7 +28,7 @@ The goals / steps of this project are the following:
 [image6]: ./output_images/s_thresh.png
 [image7]: ./output_images/combined_all.png
 [image8]: ./output_images/trans_on_test.png
-[image9]: ./output_images/perspective_tran.png.png
+[image9]: ./output_images/perspective_tran.png
 
 
 [video1]: ./project_video.mp4 "Video"
@@ -207,6 +207,7 @@ So I used a combination of color and gradient thresholds to generate a binary im
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 The code for thresholding is in the line 51-113 of file "utils.py"
 I chose to hardcode the source and destination points to calculate the transform matrix:
+
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
 | 585, 460      | 320, 0        | 
