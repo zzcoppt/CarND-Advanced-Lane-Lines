@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/mag_thresh.png 
 [image5]: ./output_images/dir_thresh.png
 [image6]: ./output_images/s_thresh.png
-
+[image7]: ./output_images/combined_all.png
 [image8]: ./output_images/trans_on_test.png
 [image9]: ./output_images/perspective_tran.png
 
