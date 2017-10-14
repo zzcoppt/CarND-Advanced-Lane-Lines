@@ -26,6 +26,9 @@ The goals / steps of this project are the following:
 [image5]: ./output_images/dir_thresh.png
 [image6]: ./output_images/s_thresh.png
 [image7]: ./output_images/combined_all.png
+[image8]: ./output_images/trans_on_test.png
+[image9]: ./output_images/perspective_tran.png.png
+
 
 [video1]: ./project_video.mp4 "Video"
 
@@ -86,6 +89,9 @@ This is how the result look like:
 ![alt text][image2]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+
+The code for thresholding is in the line 51-113 of file "utils.py"
+
 First I use the x abs_sobel_thresh to generate generate a binary image:
 ```
 def abs_sobel_thresh(img, orient='x', thresh_min=0, thresh_max=255):
@@ -198,6 +204,26 @@ So I used a combination of color and gradient thresholds to generate a binary im
 ![alt text][image6]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+The code for thresholding is in the line 51-113 of file "utils.py"
+I chose to hardcode the source and destination points to calculate the transform matrix:
+| Source        | Destination   | 
+|:-------------:|:-------------:| 
+| 585, 460      | 320, 0        | 
+| 203, 720      | 320, 720      |
+| 1127, 720     | 960, 720      |
+| 695, 460      | 960, 0        |
+```
+def get_M_Minv():
+    src = np.float32([[(203, 720), (585, 460), (695, 460), (1127, 720)]])
+    dst = np.float32([[(320, 720), (320, 0), (960, 0), (960, 720)]])
+    M = cv2.getPerspectiveTransform(src, dst)
+    Minv = cv2.getPerspectiveTransform(dst,src)
+    return M,Minv
+``` 
+And then I use the transform matrix to performed perspective transform:
+```
+thresholded_wraped = cv2.warpPerspective(thresholded, M, img.shape[1::-1], flags=cv2.INTER_LINEAR)
+```
 
 The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
@@ -224,9 +250,12 @@ This resulted in the following source and destination points:
 | 1127, 720     | 960, 720      |
 | 695, 460      | 960, 0        |
 
-I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
+I verified that my perspective transform was working as expected that the lines appear parallel in the warped image.
 
-![alt text][image4]
+![alt text][image8]
+
+And this is the result I got after I performed perspective transform to the threshholded image:
+![alt text][image9]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
