@@ -247,8 +247,23 @@ def calculate_curv_and_pos(binary_warped,left_fit, right_fit):
     lane_xm_per_pix = 3.7 / lane_width
     veh_pos = (((leftx[719] + rightx[719]) * lane_xm_per_pix) / 2.)
     cen_pos = ((binary_warped.shape[1] * lane_xm_per_pix) / 2.)
-    distance_from_center = veh_pos - cen_pos
+    distance_from_center = cen_pos - veh_pos
     return curvature,distance_from_center
+
+def select_yellow(image):
+    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
+    lower = np.array([20,60,60])
+    upper = np.array([38,174, 250])
+    mask = cv2.inRange(hsv, lower, upper)
+    
+    return mask
+
+def select_white(image):
+    lower = np.array([202,202,202])
+    upper = np.array([255,255,255])
+    mask = cv2.inRange(image, lower, upper)
+    
+    return mask
 
 def draw_values(img,curvature,distance_from_center):
     font = cv2.FONT_HERSHEY_SIMPLEX
