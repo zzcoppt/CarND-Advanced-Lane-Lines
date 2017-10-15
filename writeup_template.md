@@ -244,16 +244,6 @@ dst = np.float32(
     [(img_size[0] * 3 / 4), 0]])
 ```
 
-
-This resulted in the following source and destination points:
-
-| Source        | Destination   | 
-|:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
-
 I verified that my perspective transform was working as expected that the lines appear parallel in the warped image.
 
 ![alt text][image8]
@@ -448,5 +438,7 @@ class Line():
                 self.detected=True
                 self.recent_fitted.append(fit)
 ```
-In the current pipline, I only use the s color channal for the color thresholding, if I used more color channals or other color spaces, and cobined all this, It will likely to better capture the lane line that what I did now.
+In the current pipline, I only use the s color channal for the color thresholding, if I 
+
+My current pipeline are very likely fail to detecte the lane in night, where light condition are very different. Using more color channals or other color spaces, and cobined all this, may solve this problem, but it remain to be see.
 
