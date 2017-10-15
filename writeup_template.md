@@ -438,7 +438,6 @@ class Line():
                 self.detected=True
                 self.recent_fitted.append(fit)
 ```
-In the current pipline, I only use the s color channal for the color thresholding, if I 
 
 My current pipeline are very likely fail to detecte the lane in night, where light condition are very different. Using more color channals or other color spaces, and cobined all this, may solve this problem, but it remain to be see.
 
