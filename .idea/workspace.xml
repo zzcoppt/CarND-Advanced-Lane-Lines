@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d76f3ff1-5e1b-4150-aa61-ea715c4c4b4e" name="默认的" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vedio_out/project_video_out.mp4" afterPath="$PROJECT_DIR$/vedio_out/project_video_out.mp4" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pipeline.py" afterPath="$PROJECT_DIR$/pipeline.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/processImage.py" afterPath="$PROJECT_DIR$/processImage.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils.py" afterPath="$PROJECT_DIR$/utils.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,18 +16,21 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/CarND_Advanced_Lane_Lines$pipeline.coverage" NAME="pipeline Coverage Results" MODIFIED="1507908894667" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CarND_Advanced_Lane_Lines$processImage.coverage" NAME="processImage Coverage Results" MODIFIED="1507820796898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CarND_Advanced_Lane_Lines$pipeline.coverage" NAME="pipeline Coverage Results" MODIFIED="1508155244975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CarND_Advanced_Lane_Lines$processImage.coverage" NAME="processImage Coverage Results" MODIFIED="1508155388461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pipeline.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pipeline.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="51" column="18" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="18" />
+            <state relative-caret-position="680">
+              <caret line="45" column="66" lean-forward="false" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
               <folding>
                 <element signature="e#84#93#0" expanded="true" />
+                <marker date="1508165471599" expanded="true" signature="245:892" ph="..." />
+                <marker date="1508165471599" expanded="true" signature="968:1832" ph="..." />
+                <marker date="1508165471599" expanded="true" signature="2341:3174" ph="..." />
               </folding>
             </state>
           </provider>
@@ -34,7 +39,7 @@
       <file leaf-file-name="Clip.py" pinned="false" current-in-tab="false">
         <entry file="file://C:/software/anaconda/Lib/site-packages/moviepy/Clip.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
+            <state relative-caret-position="3150">
               <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
               <folding />
             </state>
@@ -44,18 +49,18 @@
       <file leaf-file-name="VideoClip.py" pinned="false" current-in-tab="false">
         <entry file="file://C:/software/anaconda/Lib/site-packages/moviepy/video/VideoClip.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
+            <state relative-caret-position="16425">
               <caret line="693" column="0" lean-forward="false" selection-start-line="693" selection-start-column="0" selection-end-line="693" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="processImage.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="processImage.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/processImage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3825">
-              <caret line="157" column="4" lean-forward="false" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="4" />
+            <state relative-caret-position="606">
+              <caret line="187" column="3" lean-forward="false" selection-start-line="187" selection-start-column="3" selection-end-line="187" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -74,9 +79,17 @@
       <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4925">
-              <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="181">
+              <caret line="275" column="0" lean-forward="false" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
+              <folding>
+                <marker date="1508164957705" expanded="true" signature="4932:7956" ph="..." />
+                <marker date="1508164957705" expanded="true" signature="5068:5197" ph="..." />
+                <marker date="1508164957705" expanded="true" signature="6144:7389" ph="..." />
+                <marker date="1508164957705" expanded="true" signature="8018:8990" ph="..." />
+                <marker date="1508164957705" expanded="true" signature="9053:10178" ph="..." />
+                <marker date="1508164957705" expanded="true" signature="10242:11593" ph="..." />
+                <marker date="1508164957705" expanded="true" signature="11620:11801" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -107,9 +120,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/processImage.py" />
         <option value="$PROJECT_DIR$/line.py" />
         <option value="$PROJECT_DIR$/pipeline.py" />
+        <option value="$PROJECT_DIR$/processImage.py" />
       </list>
     </option>
   </component>
@@ -172,7 +185,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.pipeline">
+  <component name="RunManager" selected="Python.processImage">
     <configuration name="pipeline" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -215,8 +228,8 @@
     </list>
     <recent_temporary>
       <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Python.pipeline" />
-        <item index="1" class="java.lang.String" itemvalue="Python.processImage" />
+        <item index="0" class="java.lang.String" itemvalue="Python.processImage" />
+        <item index="1" class="java.lang.String" itemvalue="Python.pipeline" />
       </list>
     </recent_temporary>
   </component>
@@ -236,9 +249,9 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25198728" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25397456" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299532" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3299532" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -267,9 +280,25 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/processImage.py</url>
+          <line>190</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/processImage.py</url>
+          <line>191</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="4" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="cal_imgs" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/pipeline.py">
@@ -278,54 +307,25 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#84#93#0" expanded="true" />
+            <marker date="1508165471599" expanded="true" signature="245:892" ph="..." />
+            <marker date="1508165471599" expanded="true" signature="968:1832" ph="..." />
+            <marker date="1508165471599" expanded="true" signature="2341:3174" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/processImage.py">
+    <entry file="file://C:/software/anaconda/Lib/site-packages/moviepy/video/VideoClip.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3825">
-          <caret line="157" column="4" lean-forward="true" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="4" />
+        <state relative-caret-position="16425">
+          <caret line="693" column="0" lean-forward="false" selection-start-line="693" selection-start-column="0" selection-end-line="693" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://C:/software/anaconda/Lib/site-packages/moviepy/Clip.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4925">
-          <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/line.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1175">
-          <caret line="47" column="54" lean-forward="true" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/software/anaconda/Lib/site-packages/numpy/lib/polynomial.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13850">
-          <caret line="554" column="0" lean-forward="false" selection-start-line="554" selection-start-column="0" selection-end-line="554" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4925">
-          <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/software/anaconda/Lib/site-packages/numpy/lib/polynomial.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13850">
-          <caret line="554" column="0" lean-forward="false" selection-start-line="554" selection-start-column="0" selection-end-line="554" selection-end-column="0" />
+        <state relative-caret-position="3150">
+          <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -346,9 +346,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4925">
+          <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+          <folding>
+            <marker date="1508164957705" expanded="true" signature="4932:7956" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="5068:5197" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="6144:7389" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="8018:8990" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="9053:10178" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="10242:11593" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="11620:11801" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/software/anaconda/Lib/site-packages/numpy/lib/polynomial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13850">
+          <caret line="554" column="0" lean-forward="false" selection-start-line="554" selection-start-column="0" selection-end-line="554" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#84#93#0" expanded="true" />
+            <marker date="1508165471599" expanded="true" signature="245:892" ph="..." />
+            <marker date="1508165471599" expanded="true" signature="968:1832" ph="..." />
+            <marker date="1508165471599" expanded="true" signature="2341:3174" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processImage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="157" column="4" lean-forward="true" selection-start-line="157" selection-start-column="4" selection-end-line="157" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4925">
+          <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+          <folding>
+            <marker date="1508164957705" expanded="true" signature="4932:7956" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="5068:5197" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="6144:7389" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="8018:8990" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="9053:10178" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="10242:11593" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="11620:11801" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/line.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1175">
+          <caret line="47" column="54" lean-forward="true" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/software/anaconda/Lib/site-packages/numpy/lib/polynomial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13850">
+          <caret line="554" column="0" lean-forward="false" selection-start-line="554" selection-start-column="0" selection-end-line="554" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/software/anaconda/Lib/site-packages/numpy/lib/polynomial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13850">
+          <caret line="554" column="0" lean-forward="false" selection-start-line="554" selection-start-column="0" selection-end-line="554" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/line.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1175">
+          <caret line="47" column="54" lean-forward="false" selection-start-line="47" selection-start-column="54" selection-end-line="47" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://C:/software/anaconda/Lib/site-packages/moviepy/video/VideoClip.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
+        <state relative-caret-position="16425">
           <caret line="693" column="0" lean-forward="false" selection-start-line="693" selection-start-column="0" selection-end-line="693" selection-end-column="0" />
           <folding />
         </state>
@@ -356,7 +449,7 @@
     </entry>
     <entry file="file://C:/software/anaconda/Lib/site-packages/moviepy/Clip.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
+        <state relative-caret-position="3150">
           <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
           <folding />
         </state>
@@ -364,11 +457,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pipeline.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="51" column="18" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="18" />
+        <state relative-caret-position="680">
+          <caret line="45" column="66" lean-forward="false" selection-start-line="45" selection-start-column="66" selection-end-line="45" selection-end-column="66" />
           <folding>
             <element signature="e#84#93#0" expanded="true" />
+            <marker date="1508165471599" expanded="true" signature="245:892" ph="..." />
+            <marker date="1508165471599" expanded="true" signature="968:1832" ph="..." />
+            <marker date="1508165471599" expanded="true" signature="2341:3174" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="275" column="0" lean-forward="false" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
+          <folding>
+            <marker date="1508164957705" expanded="true" signature="4932:7956" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="5068:5197" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="6144:7389" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="8018:8990" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="9053:10178" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="10242:11593" ph="..." />
+            <marker date="1508164957705" expanded="true" signature="11620:11801" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/processImage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="606">
+          <caret line="187" column="3" lean-forward="false" selection-start-line="187" selection-start-column="3" selection-end-line="187" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>

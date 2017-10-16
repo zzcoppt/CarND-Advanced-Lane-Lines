@@ -112,6 +112,20 @@ def hls_select(img,channel='s',thresh=(0, 255)):
     binary_output[(channel > thresh[0]) & (channel <= thresh[1])] = 1
     return binary_output
 
+def luv_select(img, thresh=(0, 255)):
+    luv = cv2.cvtColor(img, cv2.COLOR_RGB2LUV)
+    l_channel = luv[:,:,0]
+    binary_output = np.zeros_like(l_channel)
+    binary_output[(l_channel > thresh[0]) & (l_channel <= thresh[1])] = 1
+    return binary_output
+
+def lab_select(img, thresh=(0, 255)):
+    lab = cv2.cvtColor(img, cv2.COLOR_RGB2Lab)
+    b_channel = lab[:,:,2]
+    binary_output = np.zeros_like(b_channel)
+    binary_output[(b_channel > thresh[0]) & (b_channel <= thresh[1])] = 1
+    return binary_output
+
 def find_line(binary_warped):
     # Take a histogram of the bottom half of the image
     histogram = np.sum(binary_warped[binary_warped.shape[0]//2:,:], axis=0)
@@ -259,7 +273,7 @@ def select_yellow(image):
     return mask
 
 def select_white(image):
-    lower = np.array([202,202,202])
+    lower = np.array([170,170,170])
     upper = np.array([255,255,255])
     mask = cv2.inRange(image, lower, upper)
     
