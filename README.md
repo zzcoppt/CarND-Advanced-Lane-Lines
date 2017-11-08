@@ -86,9 +86,9 @@ for img in test_imgs:
 ![alt text][image2]
 
 #### 阈值过滤(thresholding)
-这里会使用梯度阈值(gradient threshold)，颜色阈值(color threshold)等来处理校正后的图片，捕获车道线所在位置的像素。
+这里会使用梯度阈值(gradient threshold)，颜色阈值(color threshold)等来处理校正后的图片，捕获车道线所在位置的像素。(这里的梯度指的是颜色变化的梯度)
 
-以下方法通过"cv2.Sobel()"方法计算x轴方向或y轴方向的导数，并以此进行阈值过滤(thresholding),得到二进制图(binary image)：
+以下方法通过"cv2.Sobel()"方法计算x轴方向或y轴方向的颜色变化梯度导数，并以此进行阈值过滤(thresholding),得到二进制图(binary image)：
 ```
 def abs_sobel_thresh(img, orient='x', thresh_min=0, thresh_max=255):
     #装换为灰度图片
@@ -105,16 +105,16 @@ def abs_sobel_thresh(img, orient='x', thresh_min=0, thresh_max=255):
 
     return binary_output
 ```
-通过测试发现使用x轴方向阈值在35到100区间过滤得出的二进制图可以捕获较为清晰的车道线：
+通过测试发现使用x轴方向阈值在35到100区间过滤得出的二进制图可以捕捉较为清晰的车道线：
 ```
 x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=35, thresh_max=100)
 ```
 以下为使用上面方法应用测试图片的过滤前后对比图：
 ![alt text][image3]
 
-It seems that it lose track of the lane line where the road color and the line color are light.(You could see it in 3rd,6th,7th image)
+可以看到该方法的缺陷是在路面颜色相对较浅且车道线颜色为黄色时，无法捕捉到车道线（第三，第六，第七张图），但在其他情况车道线捕捉效果还是不错的。
 
-Then I use the magnitude threshholds to see how well it does to capture the lane line:
+接下来测试一下使用全局的颜色变化梯度来进行阈值过滤：
 ```
 def mag_thresh(img, sobel_kernel=3, mag_thresh=(0, 255)):
     # Convert to grayscale
@@ -140,6 +140,9 @@ mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(50, 100))
 ```
 Here is the result I got:
 ![alt text][image4]
+
+结果仍然不理想(观察第三，第六，第七张图片)，原因是当路面颜色相对较浅且车道线颜色为黄色时，颜色变化梯度较小，想要把捕捉车道线需要把阈值下限调低，然而这样做同时还会捕获大量的噪音像素，效果会更差。
+
 
 Still not capable of capture the lane line where both the road and lane color are light.(See 3rd,6th,7th image)
 
