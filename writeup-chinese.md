@@ -3,7 +3,7 @@
 
 项目实现步骤:
 
-* 使用提供的一组棋盘图片计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients).
+* 使用提供的一组棋盘格图片计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients).
 * 校正图片
 * 使用梯度阈值(gradient threshhold)，颜色阈值(color threshhold)等处理图片得到二进制图(binary image).
 * 使用透视变换(perspective transform)得到二进制图(binary image)的鸟瞰图(birds-eye view).
@@ -32,19 +32,19 @@
 
 
 ### 相机校正(Camera Calibration)
-
-#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
-
-The code for this step is contained in 22 line of file called "utils.py" .  
+这里会使用opencv提供的方法通过棋盘格图片组计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients)。首先要得到棋盘格内角的世界坐标"object points"和对应图片坐标"image point"。假设棋盘格内角世界坐标的z轴为0，棋盘在(x,y)面上，则对于每张棋盘格图片组的图片而言，对应"object points"都是一样的。而通过使用openCv的cv2.findChessboardCorners()，传入棋盘格的灰度(grayscale)图片和横纵内角点个数就可得到图片内角的"image point"。
 ```
 
-def calibrate(images,grid=(9,6)):
+def get_obj_img_points(images,grid=(9,6)):
     object_points=[]
     img_points = []
     for img in images:
+        #生成object points
         object_point = np.zeros( (grid[0]*grid[1],3),np.float32 )
         object_point[:,:2]= np.mgrid[0:grid[0],0:grid[1]].T.reshape(-1,2)
+        #得到灰度图片
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        #得到图片的image points
         ret, corners = cv2.findChessboardCorners(gray, grid, None)
         if ret:
             object_points.append(object_point)
@@ -52,16 +52,14 @@ def calibrate(images,grid=(9,6)):
     return object_points,img_points
     
 ```
+然后使用上方法得到的`object_points` and `img_points` 传入`cv2.calibrateCamera()` 方法中就可以计算出相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients)，再使用 `cv2.undistort()`方法就可得到校正图片。
 ```
 def cal_undistort(img, objpoints, imgpoints):
-    # Use cv2.calibrateCamera() and cv2.undistort()
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img.shape[1::-1], None, None)
     dst = cv2.undistort(img, mtx, dist, None, mtx)
     return dst
 ```
-I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
-
-I then used the output `object_points` and `img_points` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
+以下为校正前后图片对比：
 
 ![alt text][image1]
 
