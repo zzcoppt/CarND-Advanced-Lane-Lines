@@ -5,7 +5,7 @@
 
 * 使用提供的一组棋盘格图片计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients).
 * 校正图片
-* 使用梯度阈值(gradient threshhold)，颜色阈值(color threshhold)等处理图片得到二进制图(binary image).
+* 使用梯度阈值(gradient threshold)，颜色阈值(color threshold)等处理图片得到清晰捕捉车道线的二进制图(binary image).
 * 使用透视变换(perspective transform)得到二进制图(binary image)的鸟瞰图(birds-eye view).
 * 检测属于车道线的像素并用它来测出车道边界.
 * 计算车道曲率及车辆相对车道中央的位置.
@@ -82,35 +82,31 @@ for img in test_imgs:
 测试图片校正前后对比：
 ![alt text][image2]
 
-#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+#### 阈值过滤(thresholding)
+这里会使用梯度阈值(gradient threshold)，颜色阈值(color threshold)等来处理校正后的图片，捕获车道线所在位置的像素。
 
-The code for thresholding is in the line 51-113 of file "utils.py"
-
-First I use the x abs_sobel_thresh to generate generate a binary image:
+以下方法通过"cv2.Sobel()"方法计算x轴方向或y轴方向的导数，并以此进行阈值过滤(thresholding),得到二进制图(binary image)：
 ```
 def abs_sobel_thresh(img, orient='x', thresh_min=0, thresh_max=255):
-    # Convert to grayscale
+    #装换为灰度图片
     gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    # Apply x or y gradient with the OpenCV Sobel() function
-    # and take the absolute value
-    if orient == 'x':
+    #使用cv2.Sobel()计算计算x方向或y方向的导数
+    if orient == 'x':
         abs_sobel = np.absolute(cv2.Sobel(gray, cv2.CV_64F, 1, 0))
     if orient == 'y':
         abs_sobel = np.absolute(cv2.Sobel(gray, cv2.CV_64F, 0, 1))
-    # Rescale back to 8 bit integer
-    scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
-    # Create a copy and apply the threshold
+    #阈值过滤
+    scaled_sobel = np.uint8(255*abs_sobel/np.max(abs_sobel))
     binary_output = np.zeros_like(scaled_sobel)
-    # Here I'm using inclusive (>=, <=) thresholds, but exclusive is ok too
     binary_output[(scaled_sobel >= thresh_min) & (scaled_sobel <= thresh_max)] = 1
 
-    # Return the result
     return binary_output
 ```
+通过测试发现使用x轴方向阈值在35到100区间过滤得出的二进制图可以捕获较为清晰的车道线：
 ```
 x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=35, thresh_max=100)
 ```
-And I get a result look like this:
+以下为使用上面方法应用测试图片的过滤前后对比图：
 ![alt text][image3]
 
 It seems that it lose track of the lane line where the road color and the line color are light.(You could see it in 3rd,6th,7th image)
