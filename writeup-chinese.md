@@ -1,21 +1,16 @@
-## Writeup Template
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+**车道检查(Advanced Lane Finding Project)**
 
----
+项目实现步骤:
 
-**Advanced Lane Finding Project**
-
-The goals / steps of this project are the following:
-
-* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
-* Apply a distortion correction to raw images.
-* Use color transforms, gradients, etc., to create a thresholded binary image.
-* Apply a perspective transform to rectify binary image ("birds-eye view").
-* Detect lane pixels and fit to find the lane boundary.
-* Determine the curvature of the lane and vehicle position with respect to center.
-* Warp the detected lane boundaries back onto the original image.
-* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+* 使用提供的一组棋盘图片计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients).
+* 校正图片
+* 使用梯度阈值(gradient threshhold)，颜色阈值(color threshhold)等处理图片得到二进制图(binary image).
+* 使用透视变换(perspective transform)得到二进制图(binary image)的鸟瞰图(birds-eye view).
+* 检测属于车道线的像素并用它来测出车道边界.
+* 计算车道曲率及车辆相对车道中央的位置.
+* 使用透视变换(perspective transform)把得到的车道边界变换会原图视角并镶嵌到原图上.
+* 处理图片展示车道区域，及车道的曲率和车辆位置.
 
 
 [//]: # (Image References)
@@ -35,19 +30,8 @@ The goals / steps of this project are the following:
 
 [video1]: ./vedio_out/project_video_out.mp4 "Video"
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
-
-### Camera Calibration
+### 相机校正(Camera Calibration)
 
 #### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
