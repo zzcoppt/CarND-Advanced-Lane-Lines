@@ -59,7 +59,7 @@ def cal_undistort(img, objpoints, imgpoints):
     dst = cv2.undistort(img, mtx, dist, None, mtx)
     return dst
 ```
-以下为校正前后图片对比：
+以下为其中一张棋盘格图片校正前后对比：
 
 ![alt text][image1]
 
@@ -79,7 +79,7 @@ for img in test_imgs:
     img = utils.cal_undistort(img,object_points,img_points)
     undistorted.append(img)
 ```
-校正前后图片对比：
+测试图片校正前后对比：
 ![alt text][image2]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
