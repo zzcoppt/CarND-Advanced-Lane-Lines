@@ -63,23 +63,23 @@ def cal_undistort(img, objpoints, imgpoints):
 
 ![alt text][image1]
 
-### Pipeline (single images)
-
-#### 1. Provide an example of a distortion-corrected image.
-
-Here is the code that I apply the undistortion methon to the test images:
+### 校正测试图片
+代码如下：
 ```
+#获取棋盘格图片
 cal_imgs = utils.get_images_by_dir('camera_cal')
+#计算object_points,img_points
 object_points,img_points = utils.calibrate(cal_imgs,grid=(9,6))
-
+#获取测试图片
 test_imgs = utils.get_images_by_dir('test_images')
 
+#校正测试图片
 undistorted = []
 for img in test_imgs:
     img = utils.cal_undistort(img,object_points,img_points)
     undistorted.append(img)
 ```
-This is how the result look like:
+校正前后图片对比：
 ![alt text][image2]
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
