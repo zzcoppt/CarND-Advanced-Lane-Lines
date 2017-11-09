@@ -216,13 +216,19 @@ thresholded_wraped = cv2.warpPerspective(thresholded, M, img.shape[1::-1], flags
 以下为阈值过滤后二进制图变形后效果：
 ![alt text][image9]
 
-#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 检测车道边界
+上面的二进制图还存在一定的噪音像素，为了准确检测车道边界，首先要确定哪些像素是属于车道线的。
+
+这里使用分布峰值的方法来定位基点，再使用使用滑动窗多项式拟合(sliding window polynomial fitting)来获取车道边界。
+首先要定位车道线的基点(图片最下方车道出现的x轴坐标)，这里使用获取图片x轴的像素分布情况，然后取左右两边的分布峰值对应的x轴坐标为左右车道线的基点。
+以下为测试片x轴的像素分布图：
+
+![alt text][image10]
 
 The code for identified lane-line pixels is in the line 115-203 of file "utils.py"
 
 I use the  Peaks in a Histogram method to identified the x position of the lane lines in binary_wraped image.
 This is how the Histogram of the test binary_wraped image:
-![alt text][image10]
 
 Then I will use the sliding window to indentified the pixel that belong to the line:
 ```
