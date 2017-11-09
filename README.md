@@ -143,37 +143,9 @@ Here is the result I got:
 
 结果仍然不理想(观察第三，第六，第七张图片)，原因是当路面颜色相对较浅且车道线颜色为黄色时，颜色变化梯度较小，想要把捕捉车道线需要把阈值下限调低，然而这样做同时还会捕获大量的噪音像素，效果会更差。
 
+那么使用颜色阈值过滤呢？
+下面为使用hls颜色空间的s通道进行阈值过滤：
 
-Still not capable of capture the lane line where both the road and lane color are light.(See 3rd,6th,7th image)
-
-So I turn to direction threshholds:
-```
-def dir_threshold(img, sobel_kernel=3, thresh=(0, np.pi/2)):
-    # Grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    # Calculate the x and y gradients
-    sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=sobel_kernel)
-    sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=sobel_kernel)
-    # Take the absolute value of the gradient direction, 
-    # apply a threshold, and create a binary image result
-    absgraddir = np.arctan2(np.absolute(sobely), np.absolute(sobelx))
-    binary_output =  np.zeros_like(absgraddir)
-    binary_output[(absgraddir >= thresh[0]) & (absgraddir <= thresh[1])] = 1
-
-    # Return the binary image
-    return binary_output
-```
-```
-dir_thresh = utils.dir_threshold(img, sobel_kernel=21, thresh=(0.7, 1.3))
-```
-Here is the result I got:
-![alt text][image5]
-
-It seems a bit too much blur.
-
-Seems gradient thresholds are not capable to handle this situation
-
-How about color thresholds:
 ```
 def hls_select(img,channel='s',thresh=(0, 255)):
     hls = cv2.cvtColor(img, cv2.COLOR_RGB2HLS)
@@ -190,9 +162,9 @@ def hls_select(img,channel='s',thresh=(0, 255)):
 ```
 s_thresh = utils.hls_select(img,channel='s',thresh=(180, 255))
 ```
-And here is the result I got:
 ![alt text][image6]
 
+可以看到在路面颜色相对较浅且车道线颜色为黄色的区域，车道线仍然被清晰的捕捉到了
 The s color channel did a great job on capature the lane where both lane and road color are light.
 But still it lose track of the lane on some place.
 It seems difference thresholds capature lane line under difference situation.
