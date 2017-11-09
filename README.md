@@ -138,7 +138,7 @@ def mag_thresh(img, sobel_kernel=3, mag_thresh=(0, 255)):
 ```
 mag_thresh = utils.mag_thresh(img, sobel_kernel=9, mag_thresh=(50, 100))
 ```
-Here is the result I got:
+
 ![alt text][image4]
 
 结果仍然不理想(观察第三，第六，第七张图片)，原因是当路面颜色相对较浅且车道线颜色为黄色时，颜色变化梯度较小，想要把捕捉车道线需要把阈值下限调低，然而这样做同时还会捕获大量的噪音像素，效果会更差。
@@ -184,16 +184,19 @@ def thresholding(img):
 
 ![alt text][image7]
 
-#### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
-The code for perspective transform is in the line 35-40 of file "utils.py"
-I chose to hardcode the source and destination points to calculate the transform matrix:
+#### 透视变换(perspective transform)
+这里使用"cv2.getPerspectiveTransform()"来获取变形矩阵(tranform matrix)，把阈值过滤后的二进制图片变形为鸟撒视角。
 
-| Source        | Destination   | 
+以下为定义的源点（source points）和目标点（destination points）
+
+| Source        | Destination   | 
 |:-------------:|:-------------:| 
 | 585, 460      | 320, 0        | 
 | 203, 720      | 320, 720      |
 | 1127, 720     | 960, 720      |
 | 695, 460      | 960, 0        |
+
+定义方法获取变形矩阵和逆变形矩阵：
 ```
 def get_M_Minv():
     src = np.float32([[(203, 720), (585, 460), (695, 460), (1127, 720)]])
@@ -202,31 +205,15 @@ def get_M_Minv():
     Minv = cv2.getPerspectiveTransform(dst,src)
     return M,Minv
 ``` 
-And then I use the transform matrix to performed perspective transform:
+然后使用"cv2.warpPerspective()"传入相关值获得变形图片(wrapped image)
 ```
 thresholded_wraped = cv2.warpPerspective(thresholded, M, img.shape[1::-1], flags=cv2.INTER_LINEAR)
 ```
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
-
-```python
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-```
-
-I verified that my perspective transform was working as expected that the lines appear parallel in the warped image.
-
+以下为原图及变形后的效果：
 ![alt text][image8]
 
-And this is the result I got after I performed perspective transform to the threshholded image:
+以下为阈值过滤后二进制图变形后效果：
 ![alt text][image9]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
