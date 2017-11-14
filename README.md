@@ -1,10 +1,7 @@
-## Advanced Lane Finding
+## **车道检查(Advanced Lane Finding Project)**
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-
-**车道检查(Advanced Lane Finding Project)**
-
-项目实现步骤:
+实现步骤:
 
 * 使用提供的一组棋盘格图片计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients).
 * 校正图片
