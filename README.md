@@ -355,7 +355,7 @@ def draw_area(undist,binary_warped,Minv,left_fit, right_fit):
     result = cv2.addWeighted(undist, 1, newwarp, 0.3, 0)
     return result
 ```
-使用"cv2.putText()"原图展示车道曲率及车辆相对车道中心位置信息：
+使用"cv2.putText()"方法处理原图展示车道曲率及车辆相对车道中心位置信息：
 ```
 def draw_values(img, curvature, distance_from_center):
     font = cv2.FONT_HERSHEY_SIMPLEX
@@ -372,79 +372,12 @@ def draw_values(img, curvature, distance_from_center):
     return img
 ```
 
+以下为测试图片处理后结果：
+
 ![alt text][image12]
 
----
+以下为处理后测试视频链接:
 
-### Pipeline (video)
-
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
-
-Here's a [link to my video result](./vedio_out/project_video_out.mp4)
-
-
----
-
-### Discussion
-
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-While use the pipeline to process the vedio it may sometime loose track of the line lane, so I define a line class to keep track of the last polynomial coefficients, the 10 most recent polynomial coefficients and the best polynomial coefficients which is average of 10 most recent polynomial coefficients so I can decide if it lose track of lane or not:
-```
-# Define a class to receive the characteristics of each line detection
-class Line():
-    def __init__(self):
-        # was the line detected in the last iteration?
-        self.detected = False  
-        # x values of the last n fits of the line
-        self.recent_fitted = [np.array([False])]
-        #average x values of the fitted line over the last n iterations
-        self.bestx = None     
-        #polynomial coefficients averaged over the last n iterations
-        self.best_fit = None  
-        #polynomial coefficients for the most recent fit
-        self.current_fit = [np.array([False])]  
-        #radius of curvature of the line in some units
-        self.radius_of_curvature = None 
-        #distance in meters of vehicle center from the line
-        self.line_base_pos = None 
-        #difference in fit coefficients between last and new fits
-        self.diffs = np.array([0,0,0], dtype='float') 
-        #x values for detected line pixels
-        self.allx = None  
-        #y values for detected line pixels
-        self.ally = None
-    
-    def check_detected(self):
-        if (self.diffs[0] < 0.01 and self.diffs[1] < 10.0 and self.diffs[2] < 1000.) and len(self.recent_fitted) > 0:
-            return True
-        else:
-            return False
-    
-        
-    def update(self,fit):
-        if fit is not None:
-            if self.best_fit is not None:
-                self.diffs = abs(fit - self.best_fit)
-                if self.check_detected():
-                    self.detected =True
-                    if len(self.recent_fitted)>10:
-                        self.recent_fitted = self.recent_fitted[1:]
-                        self.recent_fitted.append(fit)
-                    else:
-                        self.recent_fitted.append(fit)
-                    self.best_fit = np.average(self.recent_fitted, axis=0)
-                    self.current_fit = fit
-                else:
-                    self.detected = False
-            else:
-                self.best_fit = fit
-                self.current_fit = fit
-                self.detected=True
-                self.recent_fitted.append(fit)
-```
-
-My current pipeline are very likely fail to detecte the lane in night, where light condition are very different. Using more color channals or other color spaces, and cobined all this, may solve this problem, but it remain to be see.
-
+[处理后视频](./vedio_out/project_video_out.mp4)
 
 
