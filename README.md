@@ -219,19 +219,14 @@ thresholded_wraped = cv2.warpPerspective(thresholded, M, img.shape[1::-1], flags
 #### 检测车道边界
 上面的二进制图还存在一定的噪音像素，为了准确检测车道边界，首先要确定哪些像素是属于车道线的。
 
-首先要定位车道线的基点(图片最下方车道出现的x轴坐标)，这里使用获取图片x轴的像素分布情况，然后取左右两边的分布峰值对应的x轴坐标为左右车道线的基点。
+首先要定位车道线的基点(图片最下方车道出现的x轴坐标)，由于车道线在的像素都集中在x轴一定范围内，因此把图片一分为二，左右两边的在x轴上的像素分布峰值非常有可能就是车道线基点。
+
 以下为测试片x轴的像素分布图：
 
 ![alt text][image10]
 
-这里使用分布峰值的方法来定位基点，再使用使用滑动窗多项式拟合(sliding window polynomial fitting)来获取车道边界。
+定位基点后，再使用使用滑动窗多项式拟合(sliding window polynomial fitting)来获取车道边界。这里使用9个200px宽的滑动窗来定位一条车道线像素：
 
-The code for identified lane-line pixels is in the line 115-203 of file "utils.py"
-
-I use the  Peaks in a Histogram method to identified the x position of the lane lines in binary_wraped image.
-This is how the Histogram of the test binary_wraped image:
-
-Then I will use the sliding window to indentified the pixel that belong to the line:
 ```
 def find_line(binary_warped):
     # Take a histogram of the bottom half of the image
@@ -300,7 +295,8 @@ def find_line(binary_warped):
     
     return left_fit, right_fit, left_lane_inds, right_lane_inds
 ```
-After I apply the find_line method and plot the 2nd order polynomial line to the binary_wraped images, I got the result:
+以下为滑动窗多项式拟合(sliding window polynomial fitting)得到的结果：
+
 ![alt text][image11]
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
