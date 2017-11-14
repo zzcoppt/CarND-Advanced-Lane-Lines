@@ -12,7 +12,6 @@
 * 使用透视变换(perspective transform)得到二进制图(binary image)的鸟瞰图(birds-eye view).
 * 检测属于车道线的像素并用它来测出车道边界.
 * 计算车道曲率及车辆相对车道中央的位置.
-* 使用透视变换(perspective transform)把得到的车道边界变换会原图视角并镶嵌到原图上.
 * 处理图片展示车道区域，及车道的曲率和车辆位置.
 
 
@@ -299,10 +298,8 @@ def find_line(binary_warped):
 
 ![alt text][image11]
 
-#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
-The code for  calculated the radius of curvature of the lane and the position of the vehicle with respect to center is in the line 115-203 of file "utils.py"
-
-I difine a function that take a binary_wraped image,the left and right lane polynomial coefficients and output the radius of curvature of the lane and the position of the vehicle with respect to center.
+#### 计算车道曲率及车辆相对车道中心位置
+利用检测车道得到的拟合值(find_line 返回的left_fit, right_fit)计算车道曲率，及车辆相对车道中心位置：
 ```
 def calculate_curv_and_pos(binary_warped,left_fit, right_fit):
     # Define y-value where we want radius of curvature
@@ -329,11 +326,51 @@ def calculate_curv_and_pos(binary_warped,left_fit, right_fit):
     distance_from_center = veh_pos - cen_pos
     return curvature,distance_from_center
 ```
-I did this in lines # through # in my code in `my_other_file.py`
-
-#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 
+#### 处理原图，展示信息
+
+使用逆变形矩阵把鸟瞰二进制图检测的车道镶嵌回原图，并高亮车道区域:
+```
+def draw_area(undist,binary_warped,Minv,left_fit, right_fit):
+    # Generate x and y values for plotting
+    ploty = np.linspace(0, binary_warped.shape[0]-1, binary_warped.shape[0] )
+    left_fitx = left_fit[0]*ploty**2 + left_fit[1]*ploty + left_fit[2]
+    right_fitx = right_fit[0]*ploty**2 + right_fit[1]*ploty + right_fit[2]
+    # Create an image to draw the lines on
+    warp_zero = np.zeros_like(binary_warped).astype(np.uint8)
+    color_warp = np.dstack((warp_zero, warp_zero, warp_zero))
+    
+    # Recast the x and y points into usable format for cv2.fillPoly()
+    pts_left = np.array([np.transpose(np.vstack([left_fitx, ploty]))])
+    pts_right = np.array([np.flipud(np.transpose(np.vstack([right_fitx, ploty])))])
+    pts = np.hstack((pts_left, pts_right))
+    
+    # Draw the lane onto the warped blank image
+    cv2.fillPoly(color_warp, np.int_([pts]), (0,255, 0))
+    
+    # Warp the blank back to original image space using inverse perspective matrix (Minv)
+    newwarp = cv2.warpPerspective(color_warp, Minv, (undist.shape[1], undist.shape[0])) 
+    # Combine the result with the original image
+    result = cv2.addWeighted(undist, 1, newwarp, 0.3, 0)
+    return result
+```
+使用"cv2.putText()"原图展示车道曲率及车辆相对车道中心位置信息：
+```
+def draw_values(img, curvature, distance_from_center):
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    radius_text = "Radius of Curvature: %sm" % (round(curvature))
+
+    if distance_from_center > 0:
+        pos_flag = 'right'
+    else:
+        pos_flag = 'left'
+
+    cv2.putText(img, radius_text, (100, 100), font, 1, (255, 255, 255), 2)
+    center_text = "Vehicle is %.3fm %s of center" % (abs(distance_from_center), pos_flag)
+    cv2.putText(img, center_text, (100, 150), font, 1, (255, 255, 255), 2)
+    return img
+```
 
 ![alt text][image12]
 
