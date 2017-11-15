@@ -160,9 +160,11 @@ s_thresh = utils.hls_select(img,channel='s',thresh=(180, 255))
 ```
 ![alt text][image6]
 
-可以看到在路面颜色相对较浅且车道线颜色为黄色的区域，车道线仍然被清晰的捕捉到了。
+可以看到在路面颜色相对较浅且车道线颜色为黄色的区域，车道线仍然被清晰的捕捉到了，然而在其他地方表现却不太理想()
 
-最终的阈值过滤结合了多种梯度阈值和颜色阈值过滤，以应对多变的路面情况：
+因此为了应对多变的路面情况，需要结合多种阈值过滤方法。
+
+以下为最终的阈值过滤组合：
 ```
 def thresholding(img):
     x_thresh = utils.abs_sobel_thresh(img, orient='x', thresh_min=10 ,thresh_max=230)
