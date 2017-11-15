@@ -1,4 +1,4 @@
-## **车道检查(Advanced Lane Finding Project)**
+## **车道检测(Advanced Lane Finding Project)**
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 实现步骤:
@@ -160,7 +160,7 @@ s_thresh = utils.hls_select(img,channel='s',thresh=(180, 255))
 ```
 ![alt text][image6]
 
-可以看到在路面颜色相对较浅且车道线颜色为黄色的区域，车道线仍然被清晰的捕捉到了，然而在其他地方表现却不太理想()
+可以看到在路面颜色相对较浅且车道线颜色为黄色的区域，车道线仍然被清晰的捕捉到了，然而在其他地方表现却不太理想(第四，第八张图片)
 
 因此为了应对多变的路面情况，需要结合多种阈值过滤方法。
 
