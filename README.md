@@ -30,7 +30,7 @@
 [video1]: ./vedio_out/project_video_out.mp4 "Video"
 
 
-### 相机校正(Camera Calibration)
+#### 相机校正(Camera Calibration)
 这里会使用opencv提供的方法通过棋盘格图片组计算相机校正矩阵(camera calibration matrix)和失真系数(distortion coefficients)。首先要得到棋盘格内角的世界坐标"object points"和对应图片坐标"image point"。假设棋盘格内角世界坐标的z轴为0，棋盘在(x,y)面上，则对于每张棋盘格图片组的图片而言，对应"object points"都是一样的。而通过使用openCv的cv2.findChessboardCorners()，传入棋盘格的灰度(grayscale)图片和横纵内角点个数就可得到图片内角的"image point"。
 ```
 
@@ -62,7 +62,7 @@ def cal_undistort(img, objpoints, imgpoints):
 
 ![alt text][image1]
 
-### 校正测试图片
+#### 校正测试图片
 代码如下：
 ```
 #获取棋盘格图片
